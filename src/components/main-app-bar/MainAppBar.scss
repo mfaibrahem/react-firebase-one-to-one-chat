@@ -1,0 +1,16 @@
+.main-app-bar {
+	display: grid;
+	grid-auto-flow: column;
+	justify-content: center;
+	grid-gap: 32px;
+	align-items: center;
+	height: 72px;
+	background-color: beige;
+	font-size: 22px;
+
+	.nav-link {
+		&.active-nav {
+			background-color: mediumaquamarine;
+		}
+	}
+}

@@ -1,0 +1,18 @@
+.signup-form {
+	display: grid;
+	justify-content: center;
+	margin-top: 42px;
+	grid-gap: 22px;
+	input {
+		height: 62px;
+		width: 300px;
+		font-size: 18px;
+		padding: 2px 12px;
+	}
+	button {
+		width: 132px;
+		height: 62px;
+		font-size: 18px;
+		text-transform: uppercase;
+	}
+}
