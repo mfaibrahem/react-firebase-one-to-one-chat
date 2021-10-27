@@ -1,3 +1,12 @@
+@import "animate.css/animate.min.css";
+*,
+*::before,
+*::after {
+	box-sizing: border-box;
+}
+:root {
+	--animate-duration: 500ms;
+}
 body {
 	padding: 62px;
 	margin: 0;

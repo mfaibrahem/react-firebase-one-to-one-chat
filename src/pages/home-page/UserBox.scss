@@ -1,0 +1,53 @@
+.user-box {
+	border-bottom: 1px solid rgba(#000, 0.1);
+	padding: 18px 0;
+	cursor: pointer;
+	padding-right: 14px;
+	display: grid;
+	align-items: center;
+	grid-auto-flow: column;
+	transition: all 0.2s ease-out;
+
+	&:hover {
+		background-color: #fff;
+	}
+	.img-name {
+		margin: 0 12px;
+		display: grid;
+		grid-template-columns: auto 1fr;
+		align-items: center;
+		grid-gap: 8px;
+
+		.name-last-msg {
+			display: grid;
+			.username {
+				color: #000;
+			}
+			.last-msg {
+				margin-left: 4px;
+				font-size: 14px;
+				color: #777;
+				text-overflow: ellipsis;
+				overflow: hidden;
+				white-space: nowrap;
+				width: 100%;
+			}
+		}
+		img {
+			width: 46px;
+			height: 46px;
+			border-radius: 50%;
+		}
+	}
+
+	.user-status {
+		width: 8px;
+		height: 8px;
+		border-radius: 50%;
+		background-color: #adadad;
+
+		&.online {
+			background-color: #3ab83a;
+		}
+	}
+}

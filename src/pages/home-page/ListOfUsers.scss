@@ -1,0 +1,18 @@
+.list-of-users-wrap {
+	background-color: #f6f7f8;
+	border-right: 1px solid rgba(#000, 0.1);
+	.welcome-user {
+		height: 62px;
+		padding: 12px 8px;
+		text-align: center;
+		background-color: #fff3dd;
+		background-color: #d3f4f8;
+		font-size: 22px;
+		display: grid;
+		place-items: center;
+	}
+
+	.list-of-users {
+		height: 100%;
+	}
+}

@@ -3,7 +3,18 @@
 	justify-content: center;
 	margin-top: 42px;
 	grid-gap: 22px;
-	input {
+	label {
+		display: grid;
+		justify-items: center;
+	}
+	.user-uploaded-img {
+		width: 120px;
+		height: 120px;
+		border-radius: 50%;
+		object-fit: cover;
+		object-position: top center;
+	}
+	input:not([type="file"]) {
 		height: 62px;
 		width: 300px;
 		font-size: 18px;

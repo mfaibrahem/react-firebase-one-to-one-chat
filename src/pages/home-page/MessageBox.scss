@@ -1,0 +1,40 @@
+.message-box {
+	width: 100%;
+	padding-right: 8%;
+	padding-left: 8%;
+	margin-bottom: 12px;
+	display: grid;
+	.msg-content {
+		background-color: #fff;
+		border-radius: 0 0 8px 8px;
+		display: grid;
+		grid-auto-flow: column;
+		max-width: 80%;
+		position: relative;
+		.msg-data {
+			padding: 10px 11px 12px 13px;
+		}
+		.msg-tail {
+			position: absolute;
+			top: 0;
+			z-index: 100;
+			width: 8px;
+			height: 13px;
+			color: #fff;
+			display: grid;
+			left: -8px;
+		}
+	}
+
+	&.sender {
+		.msg-content {
+			justify-self: end;
+			background-color: #caf8ca;
+		}
+		.msg-tail {
+			color: #caf8ca;
+			right: -8px;
+			left: auto;
+		}
+	}
+}

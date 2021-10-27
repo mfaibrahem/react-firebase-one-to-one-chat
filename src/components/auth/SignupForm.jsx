@@ -1,11 +1,21 @@
 import "react-notifications-component/dist/theme.css";
-import "animate.css/animate.min.css";
 import "./SignupForm.scss";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import signupWithEmail from "../../api/auth/signup";
 import { store } from "react-notifications-component";
+import { useHistory } from "react-router-dom";
+import routerLinks from "../../app-routes/routerLinks";
+import Loading from "../common/loading/Loading";
+import firebase from "../../firebase";
+import UesrContext from "../../contexts/user-context/UserProvider";
+import ChatContext from "../../contexts/chat-context/ChatProvider";
 
+const sleep = ms => new Promise(r => setTimeout(r, ms));
 const SignupForm = () => {
+	const history = useHistory();
+	const { setCurrentUser } = useContext(UesrContext);
+	const { setChatUsersUnsubscribe } = useContext(ChatContext);
+	const [loading, setLoading] = useState(false);
 	const [values, setValues] = useState({
 		name: "",
 		email: "",
@@ -24,21 +34,61 @@ const SignupForm = () => {
 	};
 
 	const handleSignupWithEmail = async e => {
-		store.addNotification({
-			title: "Wonderful!",
-			message: "teodosii@react-notifications-component",
-			type: "success",
-			insert: "top",
-			container: "top-right",
-			animationIn: ["animate__animated", "animate__zoomIn"],
-			animationOut: ["animate__animated", "animate__zoomOut"],
-			dismiss: {
-				duration: 5000,
-				onScreen: true
-			}
-		});
 		e.preventDefault();
-		await signupWithEmail(values);
+		try {
+			if (values?.name && values.email && values.password) {
+				setLoading(true);
+				const signupRes = await signupWithEmail(values);
+				if (signupRes) {
+					await firebase
+						.firestore()
+						.collection("chatUsers")
+						.doc(signupRes.user.uid)
+						.set({
+							username: signupRes.user.displayName,
+							uid: signupRes.user.uid,
+							createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+							isOnline: true,
+							lastMessage: {
+								text: "",
+								createdAt: firebase.firestore.FieldValue.serverTimestamp()
+							}
+						});
+					await sleep(500);
+					setLoading(false);
+					setValues({
+						name: "",
+						email: "",
+						password: ""
+					});
+					setCurrentUser({
+						uid: signupRes.user.uid,
+						username: signupRes.user.displayName,
+						photoUrl: signupRes.user.photoURL,
+						email: signupRes.user.email
+					});
+					store.addNotification({
+						title: "Wonderful!",
+						message: "You are registered successfully.",
+						type: "success",
+						insert: "top",
+						container: "top-right",
+						animationIn: ["animate__animated", "animate__zoomIn"],
+						animationOut: ["animate__animated", "animate__zoomOut"],
+						dismiss: {
+							duration: 3000,
+							onScreen: true
+						}
+					});
+					history.push(routerLinks.homePage);
+				} else {
+					setLoading(false);
+				}
+			}
+		} catch (e) {
+			setLoading(false);
+			console.log("e", e);
+		}
 	};
 
 	return (
@@ -65,7 +115,10 @@ const SignupForm = () => {
 					placeholder="Enter your password..."
 					onChange={handleChange}
 				/>
-				<button type="submit">Signup 👉</button>
+				<button type="submit">
+					{loading ? <Loading /> : "Signup"}
+					👉
+				</button>
 			</form>
 		</div>
 	);
